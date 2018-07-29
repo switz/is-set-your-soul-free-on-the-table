@@ -46,34 +46,35 @@
   <div id="content"></div>
 
   <script type="text/javascript">
-    fetch('https://cors-anywhere.herokuapp.com/https://api.phish.net/v3/setlists/recent?apikey=F0D95586CE5BFDDB30E0', {
+    const addZero = (num) => {
+      if (num < 10) return '0' + String(num);
+      return num;
+    }
+
+    fetch('https://cors-anywhere.herokuapp.com/https://phish.net/song/set-your-soul-free', {
       mode: 'cors',
       headers: {
         Origin: window.location
       }
     })
-      .then(data => data.json())
-      .then(json => {
-        const todaysShow = json.response.data.filter(show => show.relative_date === 'Today')[0];
-        const show = json.response.data.filter(show => show.relative_date !== 'Today')[0];
+      .then(data => data.text())
+      .then(data => {
+        const date = new Date();
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
 
-        if (!show) return;
+        const todayStr = [year, addZero(month), addZero(day)].join('-');
 
         let didPlaySetYourSoulFreeToday = false;
 
-        if (todaysShow) {
-          didPlaySetYourSoulFreeToday = /set\-your\-soul\-free/.test(todaysShow.setlistdata);
-        }
-
-        const didPlaySetYourSoulFree = /set\-your\-soul\-free/.test(show.setlistdata);
-
-        if (didPlaySetYourSoulFreeToday) {
+        if (data.indexOf(todayStr) !== -1) {
           document.body.classList.add('faster')
           window.content.innerHTML = 'IT WAS PLAYED TODAY! GET OUT YOUR MOONSHINE IT\'S PARTY TIME!'
           window.content.setAttribute('didPlaySetYourSoulFreeToday', true);
-
-          return;
         }
+
+        const didPlaySetYourSoulFree = /1\sshows\sago/.test(data);
 
         // is it on the table?
         window.content.innerHTML = (didPlaySetYourSoulFree ? 'IT was played last show. FUCK YEAH!' : 'Hell Yes IT Is.');
