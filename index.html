@@ -74,6 +74,8 @@
           document.body.classList.add('faster')
           window.content.innerHTML = 'IT WAS PLAYED TODAY! GET OUT YOUR MOONSHINE IT\'S PARTY TIME!'
           window.content.setAttribute('didPlaySetYourSoulFreeToday', true);
+
+          return;
         }
 
         const didPlaySetYourSoulFree = /1\sshows\sago/.test(data);
