@@ -61,16 +61,9 @@
     })
       .then(data => data.text())
       .then(data => {
-        const date = new Date();
-        const year = date.getFullYear();
-        const month = date.getMonth() + 1;
-        const day = date.getDate();
+        const didPlaySetYourSoulFreeToday = /0\sshows\sago/.test(data);
 
-        const todayStr = [year, addZero(month), addZero(day)].join('-');
-
-        let didPlaySetYourSoulFreeToday = false;
-
-        if (data.indexOf(todayStr) !== -1) {
+        if (didPlaySetYourSoulFreeToday) {
           document.body.classList.add('faster')
           window.content.innerHTML = 'IT WAS PLAYED TODAY! GET OUT YOUR MOONSHINE IT\'S PARTY TIME!'
           window.content.setAttribute('didPlaySetYourSoulFreeToday', true);
