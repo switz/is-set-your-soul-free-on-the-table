@@ -57,11 +57,12 @@
       .then(data => data.text())
       .then(data => {
         const didPlaySetYourSoulFreeToday = /0\sshows\sago/.test(data);
-
+        const $content = document.querySelector('#content');
+      
         if (didPlaySetYourSoulFreeToday) {
           document.body.classList.add('faster')
-          window.content.innerHTML = 'IT WAS PLAYED TODAY! GET OUT YOUR MOONSHINE IT\'S PARTY TIME!'
-          window.content.setAttribute('didPlaySetYourSoulFreeToday', true);
+          $content.innerHTML = 'IT WAS PLAYED TODAY! GET OUT YOUR MOONSHINE IT\'S PARTY TIME!'
+          $content.setAttribute('didPlaySetYourSoulFreeToday', true);
 
           return;
         }
@@ -69,8 +70,8 @@
         const didPlaySetYourSoulFree = /1\sshows\sago/.test(data);
 
         // is it on the table?
-        window.content.innerHTML = (didPlaySetYourSoulFree ? 'IT was played last show. FUCK YEAH!' : 'Hell Yes IT Is.');
-        window.content.setAttribute('didPlaySetYourSoulFree', didPlaySetYourSoulFree);
+        $content.innerHTML = (didPlaySetYourSoulFree ? 'IT was played last show. FUCK YEAH!' : 'Hell Yes IT Is.');
+        $content.setAttribute('didPlaySetYourSoulFree', didPlaySetYourSoulFree);
       });
 
   </script>
